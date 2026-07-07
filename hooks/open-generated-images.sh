@@ -200,20 +200,25 @@ HTML
 # Reload the gallery tab if one is open in Chrome; otherwise open it in the
 # background (-g keeps focus in the terminal). Only script Chrome when it is
 # already running so `tell application` doesn't launch it as a side effect.
+# Chrome can stall Apple Events indefinitely (modal dialog, pending automation
+# permission prompt), so the call runs under a 5s watchdog — on timeout we
+# just fall through to `open -g`.
 if pgrep -xq "Google Chrome" 2>/dev/null; then
-  found=$(osascript -e '
-    tell application "Google Chrome"
-      set found to false
-      repeat with w in windows
-        repeat with t in tabs of w
-          if URL of t contains "image-gallery/index.html" then
-            reload t
-            set found to true
-          end if
+  found=$(perl -e 'alarm 5; exec @ARGV' osascript -e '
+    with timeout of 4 seconds
+      tell application "Google Chrome"
+        set found to false
+        repeat with w in windows
+          repeat with t in tabs of w
+            if URL of t contains "image-gallery/index.html" then
+              reload t
+              set found to true
+            end if
+          end repeat
         end repeat
-      end repeat
-      return found
-    end tell' 2>/dev/null)
+        return found
+      end tell
+    end timeout' 2>/dev/null)
   [ "$found" = "true" ] && exit 0
 fi
 open -g "$index" 2>/dev/null || true
