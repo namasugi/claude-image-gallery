@@ -3,8 +3,15 @@
   "name": "image-gallery",
   "description": "Claude Code が生成・出力した画像を自動でローカルギャラリー(静的HTML)に集約する PostToolUse hook。CLI では画像を確認できない問題を、Preview を開かずに解決する。新着があればブラウザの既存タブを AppleScript でリロード(Chrome)、タブが無ければバックグラウンドで開く。モーダル拡大・50件/ページのページネーション・パスコピー・削除済み画像の自動整理つき。Use when you want generated images (screenshots, sprites, charts, VFX) to show up in a browser gallery automatically instead of opening viewer windows.",
   "version": "0.1.0",
-  "author": { "name": "namasugi" },
+  "author": {
+    "name": "namasugi"
+  },
   "license": "MIT",
-  "keywords": ["images", "gallery", "hook", "preview", "macos"],
-  "hooks": "./hooks/hooks.json"
+  "keywords": [
+    "images",
+    "gallery",
+    "hook",
+    "preview",
+    "macos"
+  ]
 }
