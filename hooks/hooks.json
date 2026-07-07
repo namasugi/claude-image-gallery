@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/open-generated-images.sh\" 2>/dev/null || true",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}
